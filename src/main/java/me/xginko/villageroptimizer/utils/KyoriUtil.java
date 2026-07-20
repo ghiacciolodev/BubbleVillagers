@@ -1,6 +1,6 @@
 package me.xginko.villageroptimizer.utils;
 
-import me.xginko.villageroptimizer.VillagerOptimizer;
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextReplacementConfig;
 import org.bukkit.command.CommandSender;
@@ -11,11 +11,11 @@ import java.util.Locale;
 public class KyoriUtil {
 
     public static void sendMessage(@NotNull CommandSender sender, @NotNull Component message) {
-        VillagerOptimizer.audiences().sender(sender).sendMessage(message);
+        ((Audience) sender).sendMessage(message);
     }
 
     public static void sendActionBar(@NotNull CommandSender sender, @NotNull Component message) {
-        VillagerOptimizer.audiences().sender(sender).sendActionBar(message);
+        ((Audience) sender).sendActionBar(message);
     }
 
     public static @NotNull Component toUpperCase(@NotNull Component input, @NotNull Locale locale) {

@@ -1,8 +1,8 @@
 # BubbleVillagers
 
 [![Supports Folia](https://img.shields.io/badge/Supports-Folia-blue)](https://papermc.io/software/folia)
-[![Minecraft Version](https://img.shields.io/badge/Minecraft-1.21.x-green)](https://www.minecraft.net/)
-[![Java Version](https://img.shields.io/badge/Java-17+-orange)](https://adoptium.net/)
+[![Minecraft Version](https://img.shields.io/badge/Minecraft-26.1.x-green)](https://www.minecraft.net/)
+[![Java Version](https://img.shields.io/badge/Java-25-orange)](https://adoptium.net/)
 
 **BubbleVillagers** (formerly VillagerOptimizer) is a powerful performance optimization plugin that helps combat heavy villager lag by allowing players and administrators to optimize their trading halls and villager setups.
 
@@ -21,7 +21,7 @@
 4. **Command-Based**: Use commands to optimize villagers in bulk
 
 ### 🌍 Cross-Version Support
-- **Minecraft 1.16 - 1.21.x**: Full compatibility across modern Minecraft versions
+- **Minecraft 26.1.x**: Built and tested against the current stable Paper API
 - **Folia Ready**: Fully compatible with Folia's regionized multithreading
 - **Paper Optimized**: Built specifically for Paper and its forks
 
@@ -34,9 +34,9 @@
 
 ## 📋 Requirements
 
-- **Minecraft Version**: 1.16.5 or higher (optimized for 1.21.x)
-- **Server Software**: Paper, Folia, or compatible forks
-- **Java Version**: Java 17 or higher
+- **Minecraft Version**: 26.1.2
+- **Server Software**: Paper, Folia, Purpur, or a compatible Paper fork
+- **Java Version**: Java 25
 
 ## 🔧 Installation
 

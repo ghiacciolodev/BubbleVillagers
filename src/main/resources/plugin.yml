@@ -2,9 +2,9 @@ name: BubbleVillagers
 version: '${project.version}'
 main: me.xginko.villageroptimizer.VillagerOptimizer
 authors: [ Ξthan, xGinko ]
-description: Combat heavy villager lag by letting players optimize their trading halls with advanced controls. [Paper 26.1.x]
+description: Combat heavy villager lag by letting players optimize their trading halls with advanced controls. [Paper/Folia/Purpur 26.1.x]
 website: https://github.com/xGinko/VillagerOptimizer
-api-version: '26.1'
+api-version: '26.1.2'
 provides:
   - VillagerOptimizer
 softdepend:

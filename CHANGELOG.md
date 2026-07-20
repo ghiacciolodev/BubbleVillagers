@@ -5,6 +5,35 @@ All notable changes to BubbleVillagers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.8] - 2026-07-20
+
+### Fixed
+- **Paper, Folia, and Purpur startup compatibility** — Replaced the optional Adventure SLF4J component logger with BubbleVillagers' server-neutral logger. This removes the `NoSuchMethodError: Services.service(ServiceLoader, Class)` crash reported when enabling v2.1.5 on Folia-compatible forks.
+- Removed the obsolete custom Adventure SLF4J logger provider, ANSI serializer, and their dependencies. The plugin no longer initializes Adventure's optional service-loader logger implementation.
+
+### Updated
+- **Paper API** — Updated the compilation target to `26.1.2.build.74-stable`, the latest stable Paper API release. Folia and Purpur use this compatible Paper API surface; MorePaperLib continues to provide Folia-safe scheduling.
+
+## [2.1.7] - 2026-06-05
+
+### Changed
+- **Adventure API** — Removed shaded `adventure-platform-bukkit` (not needed on Paper/Folia 26.1.2) and switched `adventure-text-minimessage`, `adventure-text-serializer-ansi`, and `adventure-text-logger-slf4j` from shaded to `provided` scope, using Adventure 5.1.0 bundled in the server. This is the correct long-term fix for the `NoSuchMethodError` crash introduced in v2.1.5.
+- **KyoriUtil** — Replaced `BukkitAudiences.sender().sendMessage/sendActionBar()` with direct `Audience` cast (Paper 26.1.2's `CommandSender` natively implements `Audience`).
+- Removed `net.kyori` relocation from the shade plugin since Adventure is no longer shaded.
+
+## [2.1.6] - 2026-06-05
+
+### Fixed
+- **Folia 26.1.2 startup crash** — `NoSuchMethodError: Services.service(ServiceLoader, Class)` caused by Adventure API version mismatch. Reverted `adventure-text-minimessage`, `adventure-text-serializer-ansi`, and `adventure-text-logger-slf4j` from `5.1.0` back to `4.26.1` to maintain compatibility with `adventure-platform-bukkit:4.4.1`.
+
+## [2.1.5] - 2026-05-11
+
+### Updated
+- **Paper API** updated to `26.1.2.build.63-stable` (latest stable build)
+- **Adventure API** (`adventure-text-minimessage`, `adventure-text-serializer-ansi`, `adventure-text-logger-slf4j`) updated from `4.26.1` to `5.1.0`
+- **MockBukkit** updated from `4.108.0` to `4.110.0`
+- Updated `api-version` in `plugin.yml` to `26.1.2`
+
 ## [2.1.4] - 2026-05-02
 
 ### ✨ Added

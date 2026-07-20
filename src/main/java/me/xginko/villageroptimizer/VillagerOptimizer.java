@@ -6,15 +6,14 @@ import me.xginko.villageroptimizer.commands.VillagerOptimizerCommand;
 import me.xginko.villageroptimizer.config.Config;
 import me.xginko.villageroptimizer.config.LanguageCache;
 import me.xginko.villageroptimizer.events.OptimizedVillagerGlowCleanupListener;
+import me.xginko.villageroptimizer.logging.PluginLogger;
 import me.xginko.villageroptimizer.struct.enums.Permissions;
 import me.xginko.villageroptimizer.modules.VillagerOptimizerModule;
 import me.xginko.villageroptimizer.utils.Util;
 import me.xginko.villageroptimizer.wrapper.WrappedVillager;
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.apache.logging.log4j.Level;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.command.CommandSender;
@@ -52,8 +51,7 @@ public class VillagerOptimizer extends JavaPlugin {
     private static Cache<Villager, WrappedVillager> wrapperCache;
     private static Map<String, LanguageCache> languageCacheMap;
     private static Config config;
-    private static BukkitAudiences audiences;
-    private static ComponentLogger logger;
+    private static PluginLogger logger;
     private static Metrics bStats;
 
     private OptimizedVillagerGlowCleanupListener optimizedVillagerGlowCleanupListener;
@@ -79,8 +77,7 @@ public class VillagerOptimizer extends JavaPlugin {
         MorePaperLib morePaperLib = new MorePaperLib(this);
         commandRegistration = morePaperLib.commandRegistration();
         scheduling = morePaperLib.scheduling();
-        audiences = BukkitAudiences.create(this);
-        logger = ComponentLogger.logger(getLogger().getName());
+        logger = new PluginLogger(getLogger());
         try {
             bStats = new Metrics(this, 28770);
         } catch (IllegalStateException ignored) {
@@ -163,10 +160,6 @@ public class VillagerOptimizer extends JavaPlugin {
             scheduling.cancelGlobalTasks();
             scheduling = null;
         }
-        if (audiences != null) {
-            audiences.close();
-            audiences = null;
-        }
         if (bStats != null) {
             bStats.shutdown();
             bStats = null;
@@ -198,12 +191,8 @@ public class VillagerOptimizer extends JavaPlugin {
         return config;
     }
 
-    public static @NotNull ComponentLogger logger() {
+    public static @NotNull PluginLogger logger() {
         return logger;
-    }
-
-    public static @NotNull BukkitAudiences audiences() {
-        return audiences;
     }
 
     public static @NotNull LanguageCache getLang(Locale locale) {
