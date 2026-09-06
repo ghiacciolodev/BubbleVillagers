@@ -82,6 +82,11 @@ public class RestockOptimizedTrades extends VillagerOptimizerModule implements L
         WrappedVillager wrapped = wrapperCache.get((Villager) event.getRightClicked(), WrappedVillager::new);
         if (!wrapped.isOptimized()) return;
 
+        // Nothing has been traded since the last restock, so there is nothing to replenish.
+        // Returning here keeps the restock window available instead of burning it on a villager
+        // whose trades are already full, which is what vanilla does via Villager#needsToRestock().
+        if (!wrapped.needsRestock()) return;
+
         if (event.getPlayer().hasPermission(Permissions.Bypass.RESTOCK_COOLDOWN.get())) {
             wrapped.restock();
             return;
