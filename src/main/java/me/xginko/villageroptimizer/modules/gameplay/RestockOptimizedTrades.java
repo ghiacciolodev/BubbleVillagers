@@ -84,6 +84,7 @@ public class RestockOptimizedTrades extends VillagerOptimizerModule implements L
 
         if (event.getPlayer().hasPermission(Permissions.Bypass.RESTOCK_COOLDOWN.get())) {
             wrapped.restock();
+            wrapped.saveRestockTime();
             return;
         }
 
