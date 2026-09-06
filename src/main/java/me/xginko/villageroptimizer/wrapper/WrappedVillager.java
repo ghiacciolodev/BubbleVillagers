@@ -39,16 +39,28 @@ public class WrappedVillager extends PDCWrapper {
 
     /**
      * Restock all trading recipes.
+     * <p>
+     * Runs immediately when we are already on the thread owning the villager, which is the case
+     * when called from an entity event handler. This matters because the merchant offers are sent
+     * to the client right after the interact event finishes: deferring the restock to the next tick
+     * makes the client render the still-depleted offers until the trading screen is reopened.
+     * Falls back to the entity scheduler when called from anywhere else, so Folia stays supported.
      */
     public void restock() {
-        VillagerOptimizer.scheduling().entitySpecificScheduler(villager).run(() -> {
-            for (MerchantRecipe merchantRecipe : villager.getRecipes()) {
-                VillagerReplenishTradeEvent restockRecipeEvent = new VillagerReplenishTradeEvent(villager, merchantRecipe);
-                if (restockRecipeEvent.callEvent()) {
-                    restockRecipeEvent.getRecipe().setUses(0);
-                }
+        if (villager.getServer().isOwnedByCurrentRegion(villager)) {
+            doRestock();
+        } else {
+            VillagerOptimizer.scheduling().entitySpecificScheduler(villager).run(this::doRestock, null);
+        }
+    }
+
+    private void doRestock() {
+        for (MerchantRecipe merchantRecipe : villager.getRecipes()) {
+            VillagerReplenishTradeEvent restockRecipeEvent = new VillagerReplenishTradeEvent(villager, merchantRecipe);
+            if (restockRecipeEvent.callEvent()) {
+                restockRecipeEvent.getRecipe().setUses(0);
             }
-        }, null);
+        }
     }
 
     /**

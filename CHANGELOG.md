@@ -5,6 +5,12 @@ All notable changes to BubbleVillagers will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+- **Restocked trades stayed greyed out until the trade screen was reopened** — `WrappedVillager#restock()` queued the `setUses(0)` work on the entity scheduler, which runs on the *next* tick on both Paper and Folia. The merchant offers packet is sent to the client as soon as the `PlayerInteractEntityEvent` finishes, so the player saw the "trades restocked" message next to still-depleted (red X) trades until they closed and reopened the villager. The restock now runs inline when the caller is already on the villager's owning region thread, and only falls back to the entity scheduler otherwise (Folia stays supported).
+- Players with `villageroptimizer.bypass.restockcooldown` now also update the villager's stored restock time, keeping the cooldown state consistent with the normal code path.
+
 ## [2.1.8] - 2026-07-20
 
 ### Fixed
