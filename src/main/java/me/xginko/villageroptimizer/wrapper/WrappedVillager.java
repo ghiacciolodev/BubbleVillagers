@@ -38,6 +38,21 @@ public class WrappedVillager extends PDCWrapper {
     }
 
     /**
+     * Mirrors vanilla Villager#needsToRestock(): a recipe needs replenishing as soon as it
+     * has been used at least once since the last restock.
+     *
+     * @return true if at least one trading recipe has uses to reset.
+     */
+    public boolean needsRestock() {
+        for (MerchantRecipe merchantRecipe : villager.getRecipes()) {
+            if (merchantRecipe.getUses() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Restock all trading recipes.
      * <p>
      * Runs immediately when we are already on the thread owning the villager, which is the case
